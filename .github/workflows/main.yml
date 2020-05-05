@@ -6,7 +6,7 @@ name: Update GitHub Gist with laftel-box
 # events but only for the master branch
 on:
   schedule:
-    - cron: '*/10 * * * *'
+    - cron: "*/10 * * * *"
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -17,13 +17,12 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-    - uses: actions/checkout@v2
-
-    - name: Update watched history from laftel
-      uses: vbalien/laftel-box@master
-      with:
-        GH_TOKEN: ${{ secrets.GH_TOKEN }}
-        GIST_ID: ${{ secrets.GIST_ID }}
-        LAFTEL_TOKEN: ${{ secrets.LAFTEL_TOKEN }}
-        LAFTEL_UID: ${{ secrets.LAFTEL_UID }}
+      - uses: actions/checkout@v2
+      - run: yarn
+      - name: Update watched history from laftel
+        run: yarn start
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+          GIST_ID: ${{ secrets.GIST_ID }}
+          LAFTEL_TOKEN: ${{ secrets.LAFTEL_TOKEN }}
+          LAFTEL_UID: ${{ secrets.LAFTEL_UID }}
